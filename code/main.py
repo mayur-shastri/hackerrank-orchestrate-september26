@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 import asyncio
+import json
 
 from pathlib import Path
 
@@ -25,29 +26,35 @@ def main():
         load_all(db, dataset_dir)
         print(f"Database initialized successfully: {db_path}")
 
-        first_request = db.execute(
+        requests = db.execute(
             """
             SELECT user_id, request_date
             FROM requests
             ORDER BY request_id
-            LIMIT 1
+            LIMIT 25
             """
-        ).fetchone()
+        ).fetchall()
 
-        if first_request is None:
-            raise ValueError("No requests found in database")
+        if len(requests) < 25:
+            raise ValueError(
+                f"Expected at least 25 requests, found {len(requests)}"
+            )
 
-        world_model = asyncio.run(replay(
-            db=db,
-            user_id=first_request["user_id"],
-            request_date=first_request["request_date"],
-        ))
+
+        for request in requests[1:25]:
+            world_model = asyncio.run(
+                replay(
+                    db=db,
+                    user_id=request["user_id"],
+                    request_date=request["request_date"],
+                )
+            )
 
         print(
-            f"World model built for user {first_request['user_id']}"
+            f"\nWorld model built for user {request['user_id']}"
         )
-        print(world_model)
-
+        print(json.dumps(world_model, indent=2, default=str))
+    
     finally:
         db.close()
 

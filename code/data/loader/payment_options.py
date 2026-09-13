@@ -40,4 +40,5 @@ def load_payment_options(
         for row in rows
     ]
 
-    db.executemany(query, values)
+    result = db.executemany(query, values)
+    print(result)

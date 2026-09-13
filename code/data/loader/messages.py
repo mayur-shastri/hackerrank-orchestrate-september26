@@ -36,4 +36,5 @@ def load_messages(
         for row in rows
     ]
 
-    db.executemany(query, values)
+    result = db.executemany(query, values)
+    print(result)

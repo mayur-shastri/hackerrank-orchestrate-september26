@@ -30,4 +30,5 @@ def load_exchange_rates(
         for row in rows
     ]
 
-    db.executemany(query, values)
+    result = db.executemany(query, values)
+    print(result)

@@ -9,7 +9,7 @@ load_dotenv()
 def get_openai_client() ->  AsyncOpenAI:
     return  AsyncOpenAI(
         base_url=os.environ["LLM_BASE_URL"],
-        api_key="dummy",
+        api_key=os.environ["LLM_API_KEY"],
     )
 
 openai_client = get_openai_client()

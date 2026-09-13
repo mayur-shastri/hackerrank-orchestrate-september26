@@ -11,7 +11,7 @@ IMAGE_DIR = BASE_DIR / "dataset" / "media" / "images"
 client = openai_client
 
 def extract_image(image_id: str) -> str:
-    image_path = IMAGE_DIR / image_id
+    image_path = IMAGE_DIR / f"{image_id}.png"
 
     if not image_path.exists():
         raise FileNotFoundError(

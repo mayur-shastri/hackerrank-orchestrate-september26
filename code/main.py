@@ -17,6 +17,30 @@ def main():
         db.initialize()
         load_all(db, dataset_dir)
         print(f"Database initialized successfully: {db_path}")
+
+        first_request = db.execute(
+            """
+            SELECT user_id, request_date
+            FROM requests
+            ORDER BY request_id
+            LIMIT 1
+            """
+        ).fetchone()
+
+        if first_request is None:
+            raise ValueError("No requests found in database")
+
+        world_model = replay(
+            db=db,
+            user_id=first_request["user_id"],
+            request_date=first_request["request_date"],
+        )
+
+        print(
+            f"World model built for user {first_request['user_id']}"
+        )
+        print(world_model)
+
     finally:
         db.close()
 

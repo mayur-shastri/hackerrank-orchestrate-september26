@@ -20,7 +20,7 @@ from utils.llm import openai_client
 
 client = openai_client
 
-def replay(
+async def replay(
     db: Database,
     user_id: str,
     request_date: str,
@@ -52,7 +52,7 @@ def replay(
             profile=profile,
         )
 
-        world_model = update_world_model(
+        world_model = await update_world_model(
             world_model=world_model,
             event_context=event_context,
         )
@@ -184,7 +184,7 @@ def _prepare_event(
     return data
 
 
-def update_world_model(
+async def update_world_model(
     world_model: dict,
     event_context: dict,
 ) -> dict:
@@ -220,7 +220,7 @@ Instructions:
 - Return ONLY the complete updated world model as valid JSON.
 """
 
-    response = client.chat.completions.create(
+    response = await client.chat.completions.create(
         model=os.environ["LLM_MODEL"],
         messages=[
             {

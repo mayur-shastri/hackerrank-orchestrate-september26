@@ -9,7 +9,7 @@ IMAGE_DIR = Path(__file__).resolve().parents[3] / "dataset" / "media" / "images"
 
 client = openai_client
 
-def extract_image(image_id: str) -> str:
+async def extract_image(image_id: str) -> str:
     image_path = IMAGE_DIR / f"{image_id}.png"
 
     if not image_path.exists():
@@ -28,7 +28,7 @@ def extract_image(image_id: str) -> str:
         image_path.read_bytes()
     ).decode("utf-8")
 
-    response = client.chat.completions.create(
+    response = await client.chat.completions.create(
         model=os.environ["LLM_MODEL"],
         messages=[
             {

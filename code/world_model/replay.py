@@ -46,7 +46,7 @@ async def replay(
     event_contexts = []
 
     for event in events:
-        event_context = _build_event_context(
+        event_context = await _build_event_context(
             db=db,
             event=event,
             profile=profile,
@@ -62,7 +62,7 @@ async def replay(
     return world_model
 
 
-def _build_event_context(
+async def _build_event_context(
     db: Database,
     event,
     profile,
@@ -102,7 +102,7 @@ def _build_event_context(
     image_extractions = []
 
     for image in images:
-        extraction = extract_image(image.image_id)
+        extraction = await extract_image(image.image_id)
 
         image_extractions.append(
             {

@@ -29,8 +29,7 @@ def main():
             """
             SELECT user_id, request_date
             FROM requests
-            ORDER BY request_id
-            LIMIT 1 OFFSET 1
+            WHERE request_id = 2
             """
         ).fetchone()
 

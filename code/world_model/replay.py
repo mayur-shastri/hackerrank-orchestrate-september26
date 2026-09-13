@@ -239,6 +239,8 @@ Instructions:
         response_format={"type": "json_object"},
     )
 
+    print(response)
+
     content = response.choices[0].message.content
 
     if not content:

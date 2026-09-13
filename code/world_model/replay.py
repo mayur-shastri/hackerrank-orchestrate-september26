@@ -52,6 +52,8 @@ async def replay(
             profile=profile,
         )
 
+        print(event_context)
+
         world_model = await update_world_model(
             world_model=world_model,
             event_context=event_context,

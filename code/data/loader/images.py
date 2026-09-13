@@ -31,4 +31,4 @@ def load_images(
     ]
 
     result = db.executemany(query, values)
-    print(result)
+    print(result.rowcount, "images loaded")

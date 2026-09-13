@@ -31,4 +31,4 @@ def load_exchange_rates(
     ]
 
     result = db.executemany(query, values)
-    print(result)
+    print(result.rowcount, "exchange rates loaded")

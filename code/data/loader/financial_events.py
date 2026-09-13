@@ -51,4 +51,4 @@ def load_financial_events(
     ]
 
     result = db.executemany(query, values)
-    print(result)
+    print(result.rowcount, "financial events loaded")

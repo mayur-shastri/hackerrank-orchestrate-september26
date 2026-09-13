@@ -37,4 +37,4 @@ def load_messages(
     ]
 
     result = db.executemany(query, values)
-    print(result)
+    print(result.rowcount, "messages loaded")

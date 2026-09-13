@@ -41,4 +41,4 @@ def load_payment_options(
     ]
 
     result = db.executemany(query, values)
-    print(result)
+    print(result.rowcount, "payment options loaded")

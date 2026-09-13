@@ -43,4 +43,4 @@ def load_financial_profiles(
     ]
 
     result = db.executemany(query, values)
-    print(result)
+    print(result.rowcount, "financial profiles loaded")

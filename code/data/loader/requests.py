@@ -39,4 +39,4 @@ def load_requests(
     ]
 
     result = db.executemany(query, values)
-    print(result)
+    print(str(result.rowcount) + " requests loaded")

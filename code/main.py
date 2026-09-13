@@ -1,13 +1,13 @@
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from pathlib import Path
 
 from data.db import Database
 from data.loader.load_all import load_all
 
 from world_model.replay import replay
-
-from dotenv import load_dotenv
-
-load_dotenv()
 
 def main():
     code_dir = Path(__file__).resolve().parent

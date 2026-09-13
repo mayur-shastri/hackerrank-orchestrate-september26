@@ -29,7 +29,7 @@ def main():
             """
             SELECT user_id, request_date
             FROM requests
-            WHERE request_id = 2
+            WHERE request_id = request_02
             """
         ).fetchone()
 

@@ -5,8 +5,7 @@ from pathlib import Path
 
 from utils.llm import openai_client
 
-BASE_DIR = Path(__file__).resolve().parents[2]
-IMAGE_DIR = BASE_DIR / "dataset" / "media" / "images"
+IMAGE_DIR = Path(__file__).resolve().parents[3] / "dataset" / "media" / "images"
 
 client = openai_client
 

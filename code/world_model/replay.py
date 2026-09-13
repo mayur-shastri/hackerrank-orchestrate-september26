@@ -17,8 +17,8 @@ import os
 
 from utils.llm import openai_client
 
-
 client = openai_client
+
 
 async def replay(
     db: Database,
@@ -43,7 +43,7 @@ async def replay(
         request_date,
     )
 
-    world_model = {}
+    event_contexts = []
 
     for event in events:
         event_context = _build_event_context(
@@ -52,12 +52,12 @@ async def replay(
             profile=profile,
         )
 
-        print(event_context)
+        event_contexts.append(event_context)
 
-        world_model = await update_world_model(
-            world_model=world_model,
-            event_context=event_context,
-        )
+    world_model = await update_world_model(
+        world_model={},
+        event_contexts=event_contexts,
+    )
 
     return world_model
 
@@ -188,37 +188,40 @@ def _prepare_event(
 
 async def update_world_model(
     world_model: dict,
-    event_context: dict,
+    event_contexts: list[dict],
 ) -> dict:
     """
-    Update the world model by processing one financial event.
+    Update the world model by processing all historical financial
+    event contexts in a single LLM call.
 
-    The LLM receives the current world model and the complete
-    context for the event, then returns the updated world model.
+    The LLM receives the current world model and the complete set
+    of event contexts, then returns the resulting world model.
     """
 
     prompt = f"""
-You are updating a user's financial world model based on a newly
-processed financial event.
+You are updating a user's financial world model based on their
+historical financial events.
 
-Your task is to update the existing world model using ONLY the
-information provided in the current world model and event context.
+Your task is to construct the updated world model using ONLY the
+information provided in the current world model and event contexts.
 
 CURRENT WORLD MODEL:
 {json.dumps(world_model, indent=2)}
 
-EVENT CONTEXT:
-{json.dumps(event_context, indent=2)}
+EVENT CONTEXTS:
+{json.dumps(event_contexts, indent=2)}
 
 Instructions:
-- Preserve information from the existing world model unless the new
-  event provides evidence that it should be updated.
-- Incorporate information from the current event and its linked
-  events.
+
+- Preserve information from the existing world model unless the
+  provided event contexts provide evidence that it should be updated.
+- Incorporate information from all events and their linked events.
 - Use associated messages and extracted image information as evidence.
 - Do not invent facts.
 - Do not make affordability or purchase recommendations.
 - Keep the world model factual and useful for future forecasting.
+- Consider all event contexts together when determining the user's
+  financial state and patterns.
 - Return ONLY the complete updated world model as valid JSON.
 """
 
@@ -242,7 +245,9 @@ Instructions:
     content = response.choices[0].message.content
 
     if not content:
-        raise ValueError("World model LLM returned an empty response")
+        raise ValueError(
+            "World model LLM returned an empty response"
+        )
 
     try:
         updated_world_model = json.loads(content)

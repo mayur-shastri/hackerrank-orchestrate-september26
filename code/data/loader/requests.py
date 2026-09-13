@@ -8,7 +8,7 @@ def load_requests(
     db: Database,
     dataset_dir: str | Path,
 ) -> None:
-    rows = read_csv(Path(dataset_dir) / "requests.csv")
+    rows = read_csv(Path(dataset_dir) / "sample_requests.csv")
 
     query = """
         INSERT OR REPLACE INTO requests (

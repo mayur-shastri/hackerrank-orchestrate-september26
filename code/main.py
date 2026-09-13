@@ -2,6 +2,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+import asyncio
+
 from pathlib import Path
 
 from data.db import Database
@@ -35,11 +37,11 @@ def main():
         if first_request is None:
             raise ValueError("No requests found in database")
 
-        world_model = replay(
+        world_model = asyncio.run(replay(
             db=db,
             user_id=first_request["user_id"],
             request_date=first_request["request_date"],
-        )
+        ))
 
         print(
             f"World model built for user {first_request['user_id']}"

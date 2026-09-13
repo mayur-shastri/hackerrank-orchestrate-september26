@@ -8,8 +8,8 @@ from data.financial_events.queries import (
 )
 from data.financial_profiles.queries import get_by_user_id
 from data.exchange_rates.queries import get_rate
-from data.messages.queries import get_for_event
-from data.images.queries import get_for_event
+from data.messages.queries import get_for_event as get_messages_for_event
+from data.images.queries import get_for_event as get_images_for_event
 from data.images.ocr import extract_image
 
 import json
@@ -77,14 +77,14 @@ async def _build_event_context(
 
     for linked_event in linked_events:
         messages.extend(
-            get_for_event(
+            get_messages_for_event(
                 db,
                 linked_event.event_id,
             )
         )
 
         images.extend(
-            get_for_event(
+            get_images_for_event(
                 db,
                 linked_event.event_id,
             )

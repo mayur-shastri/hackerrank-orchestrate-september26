@@ -3,14 +3,13 @@ import mimetypes
 import os
 from pathlib import Path
 
-from openai import OpenAI
-
+from utils.llm import openai_client
 
 IMAGE_MEDIA_DIR = Path(
     os.getenv("IMAGE_MEDIA_DIR", "dataset/media/images")
 )
 
-client = OpenAI(
+client = openai_client(
     base_url=os.environ["LLM_BASE_URL"],
     api_key=os.environ["LLM_API_KEY"],
 )

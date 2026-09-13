@@ -15,10 +15,10 @@ from data.images.ocr import extract_image
 import json
 import os
 
-from openai import OpenAI
+from utils.llm import openai_client
 
 
-client = OpenAI(
+client = openai_client(
     base_url=os.environ["LLM_BASE_URL"],
     api_key=os.environ["LLM_API_KEY"],
 )

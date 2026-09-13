@@ -2,7 +2,7 @@ import json
 import os
 from typing import Any
 
-from openai import OpenAI
+from utils.llm import openai_client
 
 
 SYSTEM_PROMPT = """
@@ -32,7 +32,7 @@ class WorldModelBuilder:
         api_key: str | None = None,
         model: str | None = None,
     ) -> None:
-        self.client = OpenAI(
+        self.client = openai_client(
             base_url=base_url or os.environ["LLM_BASE_URL"],
             api_key=api_key or os.environ["LLM_API_KEY"],
         )

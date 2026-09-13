@@ -18,10 +18,7 @@ import os
 from utils.llm import openai_client
 
 
-client = openai_client(
-    base_url=os.environ["LLM_BASE_URL"],
-    api_key=os.environ["LLM_API_KEY"],
-)
+client = openai_client
 
 def replay(
     db: Database,

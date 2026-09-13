@@ -9,11 +9,7 @@ IMAGE_MEDIA_DIR = Path(
     os.getenv("IMAGE_MEDIA_DIR", "dataset/media/images")
 )
 
-client = openai_client(
-    base_url=os.environ["LLM_BASE_URL"],
-    api_key=os.environ["LLM_API_KEY"],
-)
-
+client = openai_client
 
 def extract_image(image_id: str) -> str:
     image_path = IMAGE_MEDIA_DIR / image_id

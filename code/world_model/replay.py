@@ -221,6 +221,7 @@ Instructions:
 """
 
     response = await client.chat.completions.create(
+        model=os.environ["LLM_MODEL"],
         messages=[
             {
                 "role": "system",
@@ -233,7 +234,7 @@ Instructions:
                 "role": "user",
                 "content": prompt,
             },
-        ]
+        ],
     )
 
     content = response.choices[0].message.content

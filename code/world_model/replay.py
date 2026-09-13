@@ -221,7 +221,7 @@ Instructions:
 """
 
     response = client.chat.completions.create(
-        model=os.environ["AI_GATEWAY_MODEL"],
+        model=os.environ["LLM_MODEL"],
         messages=[
             {
                 "role": "system",
